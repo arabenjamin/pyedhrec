@@ -15,4 +15,23 @@ Using this hacky-ass python script, and [mtgjson](https://mtgjson.com/) as data 
 * Offer suggestions on how to best edit your deck, including tiered priced suggestions. 
 
 
+## Prerequisites
+- Python 3.12 or higher
+- [Docker](https://www.docker.com/)
+- [Neo4j database](https://neo4j.com)
+- [Ollama](https://ollama.com)
+- [n8n](https://n8n.io)
+
+
+## Setup
+
+To set up the project, follow these steps:
+
+Run Docker compose. 
+
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Run `docker-compose up` to start the services.
+
+
 
