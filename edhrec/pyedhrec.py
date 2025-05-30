@@ -2,6 +2,9 @@ import json
 import re
 import requests
 
+from typing import List, Union
+
+
 from .caching import commander_cache, card_detail_cache, combo_cache, average_deck_cache, deck_cache
 from .utils import get_random_ua
 
@@ -56,7 +59,7 @@ class EDHRec:
         else:
             return res.content
 
-    def get_build_id(self) -> str or None:
+    def get_build_id(self) -> Union[str, None]:
         home_page = self._get(self.base_url, return_type="raw")
         home_page_content = home_page.decode("utf-8")
         script_block_regex = r"<script id=\"__NEXT_DATA__\" type=\"application/json\">(.*)</script>"
@@ -194,6 +197,16 @@ class EDHRec:
         res = self._get(average_deck_uri, query_params=params)
         data = self._get_nextjs_data(res)
         return data
+    
+
+    def get_commander_deck_list(self, deck_hash:str) -> dict:
+        uri = f"{self._api_base_url}/deckpreview/{deck_hash}"
+        body = {
+            "deckId": deck_hash, 
+        }
+        resp = self.session.post(uri, json=body)
+        resp.raise_for_status()
+        return resp.json()
 
     def get_commander_cards(self, card_name: str) -> dict:
         card_list = self._get_cardlist_from_container(card_name)
